@@ -1,0 +1,12 @@
+[project]
+name = "learn-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "chromadb>=1.5.9",
+    "openai>=2.39.0",
+    "sentence-transformers>=5.5.1",
+    "streamlit>=1.58.0",
+]

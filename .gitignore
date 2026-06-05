@@ -1,4 +1,9 @@
 **/.env.*
+**/.bin.*
+**/*chroma*/
+**/chroma_data/git
+# Add this line to your .gitignore file
+Learn-RAG/chroma_data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -7,7 +12,7 @@ __pycache__/
 # C extensions
 *.so
 
-# Distribution / packaging
+# Distribution / packaginggit add 
 .Python
 build/
 develop-eggs/

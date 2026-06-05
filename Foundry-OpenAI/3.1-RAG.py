@@ -8,10 +8,19 @@ import os
 load_dotenv()
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# CONFIGURATION
+MODEL_NAME=os.getenv("MODEL_NAME")
+API_KEY=os.getenv("API_KEY")
+BASE_URL=os.getenv("OPENAI_ENDPOINT")
+
+# API key authentication
+client = OpenAI(
+    api_key=API_KEY,
+    base_url=BASE_URL
+)
 
 # Directory containing PDF files
-dir_pdfs = "openai_blog_pdfs"  # Store PDFs locally in this folder
+dir_pdfs = r"C:\Users\anana\Downloads\Upgrad-AI-Course\Foundry-OpenAI\Policies"  # Store PDFs locally in this folder
 
 # Validate directory existence
 if not os.path.exists(dir_pdfs):
@@ -54,7 +63,7 @@ def create_vector_store(store_name: str) -> dict:
         return {}
 
 
-store_name = "openai_blog_store"
+store_name = "policies_vector_store"
 vector_store_details = create_vector_store(store_name)
 
 
@@ -145,33 +154,39 @@ Now that our vector store is ready, we can query the Vector Store
 directly and retrieve relevant content for a specific query.
 """
 
-# Query 1
-query = "What is the leave policy?"
+# --------------------Unsupported By Foundry but supported by OpenAI--------------------
+# Date: May 29, 2026
+# Proof:  https://learn.microsoft.com/en-us/answers/questions/2261951/azure-openai-vector-store-attributes-retrieval
+# OpenAPI support: https://developers.openai.com/api/docs/guides/retrieval
+# ----------------------------------------------------------------------------------------
+# # Query 1
+# query = "What is the leave policy?"
 
-search_results = client.vector_stores.search(
-    vector_store_id=vector_store_details["id"],
-    query=query
-)
+# search_results = client.vector_stores.search(
+#     vector_store_id=vector_store_details["id"],
+#     query=query,
 
-print("\nSearch Result:")
-print(search_results.data[0].content[0].text)
+# )
 
-# Query 2
-query = "What is the notice period for employees on probation?"
+# print("\nSearch Result:")
+# print(search_results.data[0].content[0].text)
 
-search_results = client.vector_stores.search(
-    vector_store_id=vector_store_details["id"],
-    query=query
-)
+# # Query 2
+# query = "What is the notice period for employees ?"
 
-print("\nDetailed Results:")
+# search_results = client.vector_stores.search(
+#     vector_store_id=vector_store_details["id"],
+#     query=query
+# )
 
-for result in search_results.data:
-    print(
-        f"{len(result.content[0].text)} characters "
-        f"from {result.filename} "
-        f"with relevance score {result.score}"
-    )
+# print("\nDetailed Results:")
+
+# for result in search_results.data:
+#     print(
+#         f"{len(result.content[0].text)} characters "
+#         f"from {result.filename} "
+#         f"with relevance score {result.score}"
+#     )
 
 """
 Integrating search results with LLM in a single API call
@@ -181,7 +196,7 @@ query = "What is the leave policy?"
 
 response = client.responses.create(
     input=query,
-    model="gpt-4o-mini",
+    model=MODEL_NAME,
     tools=[
         {
             "type": "file_search",
@@ -218,7 +233,7 @@ def get_response_from_vectorstore(query: str):
     try:
         response = client.responses.create(
             input=query,
-            model="gpt-4o-mini",
+            model=MODEL_NAME,
             tools=[
                 {
                     "type": "file_search",

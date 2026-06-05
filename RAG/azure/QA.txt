@@ -1,0 +1,10 @@
+# struggles to answer:
+- according to policies can I do freelancing while working in my company
+Ask: according to moonlighting policies can I do freelancing while working in my company
+
+- what is cutoff for nda
+Ask: what is cutoff for national defence academy
+
+- Upload new documents but didn't re-index ... no insight to LLM
+Q: what is income tax rate for 11 Lakh annunal income
+>> run indexer again
